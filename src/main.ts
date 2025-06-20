@@ -75,18 +75,41 @@ function isActress(dati: unknown): dati is Actress {
 
 async function getActress(id: number): Promise<Actress | null> {
   try {
-    const res = await fetch(`http://localhost:3333/actesses/${id}`);
-    const data = await res.json();
+    const res = await fetch(`http://localhost:3333/actresses/${id}`);
+    const data: unknown = await res.json();
     if (!isActress(data)) {
       throw new Error("Formato dati non valido");
     }
     return data;
   } catch (error) {
     if (error instanceof Error) {
-      console.error("Errore durante il recupero dei dati");
+      console.error("Errore durante il recupero dell' attrice", error);
     } else {
-      console.error("Errore sconosciuto");
+      console.error("Errore sconosciuto", error);
     }
     return null;
+  }
+}
+
+// MILESTONE 4
+async function getAllActresses(): Promise<Actress[]> {
+  try {
+    const res = await fetch(`http://localhost:3333/actresses`);
+    if (!res.ok) {
+      throw new Error(`Errore HTTP ${res.status} ${res.statusText}`);
+    }
+    const data: unknown = await res.json();
+    if (!(data instanceof Array)) {
+      throw new Error("Formato dati non valido");
+    }
+    const validActresses = data.filter(isActress);
+    return validActresses;
+  } catch (error) {
+    if (error instanceof Error) {
+      console.error("Errore durante il recupero delle attrici", error);
+    } else {
+      console.error("Errore sconosciuto", error);
+    }
+    return [];
   }
 }
