@@ -7,3 +7,23 @@ type Person = {
   biography: string;
   image: string;
 };
+
+// MILESTONE 2
+type ActressNationality =
+  | "American"
+  | "British"
+  | "Australian"
+  | "Israeli-American"
+  | "South African"
+  | "French"
+  | "Indian"
+  | "Israeli"
+  | "Spanish"
+  | "South Korean"
+  | "Chinese";
+
+type Actress = Person & {
+  most_famous_movies: [string, string, string];
+  awards: string;
+  nationaliti: ActressNationality;
+};
